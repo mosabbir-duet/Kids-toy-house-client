@@ -1,11 +1,40 @@
 import Lottie from "lottie-react";
-import React from "react";
+import React, { useContext } from "react";
 import { FaFacebookF } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import login from "../../assets/78126-secure-login.json";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Register = () => {
+  const { createUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleToRegister = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    const photoUrl = form.photoUrl.value;
+    // console.log(name, email, password, photoUrl);
+    createUser(email, password)
+      .then((result) => {
+        const user = result.user;
+        if (user) {
+          Swal.fire({
+            icon: "success",
+            title: "Welcome",
+            text: "Sign up Successfully",
+          });
+        }
+        console.log(user);
+        navigate("/");
+      })
+      .catch((error) => console.error(error.message));
+  };
+
   return (
     <div>
       <div className="lg:flex justify-between items-center px-8 my-16 container mx-auto">
@@ -14,7 +43,7 @@ const Register = () => {
         </div>
         <div className="card lg:w-1/2 shadow-2xl bg-base-100 mx-auto sm:px-8">
           <div className="card-body sm:px-16 sm:pt-16">
-            <form>
+            <form onSubmit={handleToRegister}>
               <div className="text-center mb-10">
                 <h1 className="text-5xl font-bold">Register</h1>
               </div>
@@ -47,7 +76,7 @@ const Register = () => {
                   </span>
                 </label>
                 <input
-                  type="text"
+                  type="password"
                   placeholder="Your password"
                   className="input  border-[#f8ea69]"
                   name="password"
@@ -60,10 +89,10 @@ const Register = () => {
                   </span>
                 </label>
                 <input
-                  type="password"
+                  type="url"
                   placeholder="Photo url"
                   className="input  border-[#f8ea69]"
-                  name="PhotoUrl"
+                  name="photoUrl"
                 />
               </div>
               <div className="form-control mt-6">
