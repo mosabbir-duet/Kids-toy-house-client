@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.active {
+  @apply lg:border-b-2 lg:border-[#c0c0c0] hover:text-[#ff0018];
+}
+
+.nav-list-style {
+  @apply text-xl font-medium lg:mr-8 py-2 lg:inline block;
+}
+.nav-list-style:last-child {
+  @apply mr-0;
+}
