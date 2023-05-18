@@ -7,12 +7,7 @@ const ErrorPage = () => {
   return (
     <div className=" mb-8 md:mx-auto md:w-2/3">
       <div>
-        <Lottie
-          animationData={showError}
-          // height={400}
-          // width={400}
-          loop={true}
-        ></Lottie>
+        <Lottie animationData={showError} loop={true}></Lottie>
       </div>
       <div className=" text-center">
         <p className="text-2xl font-semibold md:text-3xl mb-8">
