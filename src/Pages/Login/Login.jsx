@@ -1,17 +1,48 @@
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Lottie from "lottie-react";
-import React from "react";
+import React, { useContext } from "react";
 import { FaFacebookF } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import login from "../../assets/78126-secure-login.json";
+import { AuthContext } from "../../providers/AuthProvider";
 AOS.init();
 const Login = () => {
+  const navigate = useNavigate();
+  const { signIn } = useContext(AuthContext);
+  // form click handle function
+  const handleToLogin = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    // console.log(email, password);
+
+    // signIn context for login user
+    signIn(email, password)
+      .then((result) => {
+        const user = result.user;
+
+        if (user) {
+          Swal.fire({
+            icon: "success",
+            title: "Welcome to Kid's Toy House!!!",
+            text: "User has been log in successfully.",
+          });
+          navigate("/");
+        }
+        // navigate to home
+
+        console.log(user);
+      })
+      .catch((error) => console.error(error.message));
+  };
   return (
     <div>
       <div className="lg:flex justify-between items-center px-8 my-16 container mx-auto">
-        <div className="lg:w-1/2 mb-12 px-8">
+        <div className="lg:w-1/2 mb-12 px-8 hover:scale-110 duration-700 ">
           <Lottie animationData={login} loop={true}></Lottie>
         </div>
         <div
@@ -24,7 +55,7 @@ const Login = () => {
             data-aos="fade-down"
             data-aos-duration="2500"
           >
-            <form>
+            <form onSubmit={handleToLogin}>
               <div className="text-center mb-10">
                 <h1 className="text-5xl font-bold">Login</h1>
               </div>
