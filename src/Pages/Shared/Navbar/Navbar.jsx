@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { BiX } from "react-icons/bi";
 import { FaBars } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../../../providers/AuthProvider";
 import "./Navbar.css";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user } = useContext(AuthContext);
   const navItems = (
     <>
       <NavLink
@@ -28,27 +30,45 @@ const Navbar = () => {
       >
         All Toys
       </NavLink>
-      <NavLink
-        className={`nav-list-style ${({ isActive }) =>
-          isActive ? "active" : "default"}`}
-        to="/mytoys"
-      >
-        My Toys
-      </NavLink>
-      <NavLink
-        className={`nav-list-style ${({ isActive }) =>
-          isActive ? "active" : "default"}`}
-        to="/addtoys"
-      >
-        Add Toys
-      </NavLink>
-      <NavLink
-        className={`nav-list-style ${({ isActive }) =>
-          isActive ? "active" : "default"}`}
-        to="/login"
-      >
-        Login
-      </NavLink>
+
+      {user ? (
+        <>
+          <NavLink
+            className={`nav-list-style ${({ isActive }) =>
+              isActive ? "active" : "default"}`}
+            to="/mytoys"
+          >
+            My Toys
+          </NavLink>
+          <NavLink
+            className={`nav-list-style ${({ isActive }) =>
+              isActive ? "active" : "default"}`}
+            to="/addtoys"
+          >
+            Add Toys
+          </NavLink>
+          <img
+            className="w-10 h-10 rounded-full lg:inline-block mr-4 hidden tooltip"
+            src={user?.photoURL}
+            alt="userImage"
+            title={user?.displayName}
+          />
+          <Link
+            className={`nav-list-style lg:visible invisible ${({ isActive }) =>
+              isActive ? "active" : "default"}`}
+          >
+            SignOut
+          </Link>
+        </>
+      ) : (
+        <NavLink
+          className={`nav-list-style ${({ isActive }) =>
+            isActive ? "active" : "default"}`}
+          to="/login"
+        >
+          Login
+        </NavLink>
+      )}
     </>
   );
 
@@ -89,8 +109,9 @@ const Navbar = () => {
           <div className="absolute top-0 left-0 w-full z-10">
             <div className="py-5 bg-[#f8ea69] border rounded shadow-sm ">
               {/* Logo & Button section */}
-              <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center justify-between mb-2 px-4">
                 <div>{websiteLogo}</div>
+
                 {/* Dropdown menu close button */}
                 <div>
                   <button
@@ -100,6 +121,26 @@ const Navbar = () => {
                   >
                     <BiX className="text-3xl text-red-600 " />
                   </button>
+                </div>
+                <div className="flex items-center">
+                  {user ? (
+                    <>
+                      <img
+                        className="w-12 h-12 rounded-full inline-block mr-4 lg:hidden"
+                        src={user.photoURL}
+                        alt=""
+                      />
+                      <NavLink
+                        className={`nav-list-style  ${({ isActive }) =>
+                          isActive ? "active" : "default"}`}
+                        to="/login"
+                      >
+                        SignOut
+                      </NavLink>
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </div>
               {/* Mobile Nav Items Section */}

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .active {
-  @apply lg:border-b-2 lg:border-[#c0c0c0] hover:text-[#ff0018];
+  @apply text-[#ff0018];
 }
 
 .nav-list-style {
