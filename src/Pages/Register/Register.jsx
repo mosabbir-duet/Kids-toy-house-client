@@ -1,7 +1,7 @@
 import { updateProfile } from "firebase/auth";
 import Lottie from "lottie-react";
 import React, { useContext } from "react";
-import { FaFacebookF } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -9,7 +9,7 @@ import login from "../../assets/78126-secure-login.json";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Register = () => {
-  const { createUser, logOut } = useContext(AuthContext);
+  const { createUser, logOut, signInWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleToRegister = (event) => {
@@ -63,6 +63,32 @@ const Register = () => {
       })
       .catch((error) => {
         // console.error(error.message);
+      });
+  };
+
+  const handleToGoogleSignIn = () => {
+    signInWithGoogle()
+      .then((result) => {
+        const user = result.user;
+
+        if (user) {
+          Swal.fire({
+            icon: "success",
+            title: "Welcome to Kid's Toy House!!!",
+            text: "User has been log in successfully.",
+          });
+          navigate("/");
+        }
+        // navigate to home
+
+        console.log(user);
+      })
+      .catch((error) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops!!!",
+          text: error?.message,
+        });
       });
   };
 
@@ -137,12 +163,15 @@ const Register = () => {
             <div className=" mx-auto text-center space-y-3">
               <h3 className="text-xl font-medium mt-3 ">Or Sign Up with</h3>
 
-              <div className="flex justify-center gap-4">
-                <span className="hover:bg-[#f8ea69] rounded-full p-3 cursor-pointer">
-                  <FaFacebookF className="text-sky-600 text-xl"></FaFacebookF>
+              <div className="flex justify-center gap-2">
+                <span className="hover:bg-[#f8ea69] rounded-full p-2 cursor-pointer">
+                  <FaGithub className=" text-2xl"></FaGithub>
                 </span>
-                <span className="hover:bg-[#f8ea69] rounded-full p-3 cursor-pointer">
-                  <FcGoogle className=" text-xl"></FcGoogle>
+                <span
+                  onClick={handleToGoogleSignIn}
+                  className="hover:bg-[#f8ea69] rounded-full p-2 cursor-pointer"
+                >
+                  <FcGoogle className=" text-2xl"></FcGoogle>
                 </span>
               </div>
               <p className="text-xl">
