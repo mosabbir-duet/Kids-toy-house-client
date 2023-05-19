@@ -1,3 +1,4 @@
+import { updateProfile } from "firebase/auth";
 import Lottie from "lottie-react";
 import React, { useContext } from "react";
 import { FaFacebookF } from "react-icons/fa";
@@ -29,10 +30,33 @@ const Register = () => {
             text: "Sign up Successfully",
           });
         }
+        // update user info from field data
+        updateUserinfo(user, name, photoUrl);
         console.log(user);
         navigate("/");
       })
-      .catch((error) => console.error(error.message));
+      .catch((error) => {
+        Swal.fire({
+          icon: "error",
+          title: "Error!",
+          text: error.message,
+        });
+        console.error(error.message);
+      });
+  };
+  //   update user information
+
+  const updateUserinfo = (user, name, photoUrl) => {
+    updateProfile(user, {
+      displayName: name,
+      photoURL: photoUrl,
+    })
+      .then(() => {
+        // console.log("Updated Successfully");
+      })
+      .catch((error) => {
+        // console.error(error.message);
+      });
   };
 
   return (

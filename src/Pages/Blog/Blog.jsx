@@ -1,9 +1,7 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../../providers/AuthProvider";
+import React from "react";
 
 const Blog = () => {
-  const { person } = useContext(AuthContext);
-  return <div> This is a blog page {person.name}</div>;
+  return <div> This is a blog page</div>;
 };
 
 export default Blog;
