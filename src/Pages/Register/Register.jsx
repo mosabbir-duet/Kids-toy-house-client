@@ -9,7 +9,7 @@ import login from "../../assets/78126-secure-login.json";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Register = () => {
-  const { createUser } = useContext(AuthContext);
+  const { createUser, logOut } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleToRegister = (event) => {
@@ -32,7 +32,14 @@ const Register = () => {
         }
         // update user info from field data
         updateUserinfo(user, name, photoUrl);
-        console.log(user);
+        // console.log(user);
+
+        // logOut function use for preventing auto login when someone sign up
+        logOut()
+          .then((result) => {})
+          .catch((error) => console.log(error.message));
+
+        // Redirect to home page after successfully user register
         navigate("/");
       })
       .catch((error) => {
