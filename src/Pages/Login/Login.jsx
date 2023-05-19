@@ -1,9 +1,12 @@
+import AOS from "aos";
+import "aos/dist/aos.css";
 import Lottie from "lottie-react";
 import React from "react";
 import { FaFacebookF } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import login from "../../assets/78126-secure-login.json";
+AOS.init();
 const Login = () => {
   return (
     <div>
@@ -11,8 +14,16 @@ const Login = () => {
         <div className="lg:w-1/2 mb-12 px-8">
           <Lottie animationData={login} loop={true}></Lottie>
         </div>
-        <div className="card lg:w-1/2 shadow-2xl bg-base-100 mx-auto sm:px-8">
-          <div className="card-body sm:px-16 sm:pt-16">
+        <div
+          className="card lg:w-1/2 shadow-2xl bg-base-100 mx-auto sm:px-8"
+          // data-aos="zoom-in"
+          // data-aos-duration="1000"
+        >
+          <div
+            className="card-body sm:px-16 sm:pt-16"
+            data-aos="fade-down"
+            data-aos-duration="2500"
+          >
             <form>
               <div className="text-center mb-10">
                 <h1 className="text-5xl font-bold">Login</h1>
