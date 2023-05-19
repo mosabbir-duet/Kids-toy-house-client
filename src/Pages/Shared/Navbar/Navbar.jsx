@@ -6,7 +6,14 @@ import { AuthContext } from "../../../providers/AuthProvider";
 import "./Navbar.css";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
+
+  const handleToLogOut = () => {
+    logOut()
+      .then((result) => {})
+      .catch((error) => console.log(error.message));
+  };
+
   const navItems = (
     <>
       <NavLink
@@ -48,14 +55,14 @@ const Navbar = () => {
             Add Toys
           </NavLink>
           <img
-            className="w-10 h-10 rounded-full lg:inline-block mr-4 hidden tooltip"
+            className="w-14 h-14 border-4 border-gray-400  px-0.5 rounded-full lg:inline-block mr-4 hidden tooltip"
             src={user?.photoURL}
             alt="userImage"
             title={user?.displayName}
           />
           <Link
-            className={`nav-list-style lg:visible invisible ${({ isActive }) =>
-              isActive ? "active" : "default"}`}
+            onClick={handleToLogOut}
+            className="nav-list-style invisible lg:visible"
           >
             SignOut
           </Link>
@@ -122,26 +129,21 @@ const Navbar = () => {
                     <BiX className="text-3xl text-red-600 " />
                   </button>
                 </div>
-                <div className="flex items-center">
-                  {user ? (
-                    <>
-                      <img
-                        className="w-12 h-12 rounded-full inline-block mr-4 lg:hidden"
-                        src={user.photoURL}
-                        alt=""
-                      />
-                      <NavLink
-                        className={`nav-list-style  ${({ isActive }) =>
-                          isActive ? "active" : "default"}`}
-                        to="/login"
-                      >
-                        SignOut
-                      </NavLink>
-                    </>
-                  ) : (
-                    <></>
-                  )}
-                </div>
+                {user ? (
+                  <div className="flex items-center">
+                    <img
+                      className="w-14 h-14 border-4 border-gray-400  px-0.5 rounded-full inline-block mr-4 lg:hidden"
+                      src={user.photoURL}
+                      alt=""
+                      title={user?.displayName}
+                    />
+                    <Link onClick={handleToLogOut} className="nav-list-style">
+                      SignOut
+                    </Link>
+                  </div>
+                ) : (
+                  <></>
+                )}
               </div>
               {/* Mobile Nav Items Section */}
               <nav className="text-center block w-full ">{navItems}</nav>
