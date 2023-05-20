@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 const AddToy = () => {
   const [selectedOption, setSelectedOption] = useState(null);
+  const [toyData, setToyData] = useState([]);
 
   const {
     register,
@@ -12,8 +13,20 @@ const AddToy = () => {
   } = useForm();
   const onSubmit = (data) => {
     console.log(data);
-    reset();
+    setToyData(data);
+    fetch("https://kids-toy-house-server.vercel.app/addtoys", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.log(error.message));
+    // reset();
   };
+
   return (
     <div className="my-12">
       <div className="w-2/3 mx-auto border border-orange-500 p-12 rounded-xl">
