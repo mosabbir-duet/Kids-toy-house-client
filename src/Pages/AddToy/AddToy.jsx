@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../providers/AuthProvider";
 const AddToy = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [toyData, setToyData] = useState([]);
+  const { user } = useContext(AuthContext);
 
   const {
     register,
@@ -22,9 +25,17 @@ const AddToy = () => {
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
-      .then((data) => console.log(data))
+      .then((data) => {
+        if (data.insertedId) {
+          Swal.fire({
+            icon: "success",
+            title: "Wow!!!",
+            text: "Toy added successfully...",
+          });
+        }
+      })
       .catch((error) => console.log(error.message));
-    // reset();
+    reset();
   };
 
   return (
@@ -43,6 +54,7 @@ const AddToy = () => {
               <input
                 className="input input-bordered"
                 placeholder="Your name"
+                defaultValue={user?.displayName}
                 type="text"
                 {...register("sellerName", {
                   required: "Field Value required.",
@@ -60,6 +72,7 @@ const AddToy = () => {
               <input
                 type="email"
                 placeholder="Your email"
+                defaultValue={user?.email}
                 className="input input-bordered"
                 {...register("sellerEmail", {
                   required: "Field Value required.",
@@ -126,7 +139,7 @@ const AddToy = () => {
                 <span className="label-text text-xl">Toy Price</span>
               </label>
               <input
-                type="number"
+                type="text"
                 placeholder="Toy price"
                 className="input input-bordered"
                 {...register("toyPrice", { required: "Field value required." })}

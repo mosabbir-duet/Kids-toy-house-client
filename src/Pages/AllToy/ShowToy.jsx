@@ -1,16 +1,23 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const ShowToy = () => {
+const ShowToy = ({ toy, idx }) => {
+  //   console.log(toy, idx);
+  const { sellerName, subCategory, toyName, toyPrice, quantity } = toy || {};
   return (
     <>
       <tr>
-        <th>1</th>
-        <td>Sabbir</td>
-        <td>Iron man</td>
-        <td>Marvel</td>
-        <td>14.99</td>
-        <td>14</td>
-        <button className="btn btn-warning btn-sm">View Details</button>
+        <th>{idx + 1}</th>
+        <td>{sellerName}</td>
+        <td>{toyName}</td>
+        <td>{subCategory}</td>
+        <td>{toyPrice}</td>
+        <td>{quantity}</td>
+        <td>
+          <Link>
+            <button className="btn btn-warning ">View Details</button>
+          </Link>
+        </td>
       </tr>
     </>
   );

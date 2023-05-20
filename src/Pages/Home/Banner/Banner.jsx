@@ -3,8 +3,8 @@ import React from "react";
 import banner from "../../../assets/66214-thor-vs-captain-america.json";
 const Banner = () => {
   return (
-    <div>
-      <div className="hero my-16 bg-yellow-300 px-4 rounded  md:px-0">
+    <div className="bg-yellow-300 my-16">
+      <div className="hero p-12 md:px-0">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="lg:w-1/2">
             <Lottie
