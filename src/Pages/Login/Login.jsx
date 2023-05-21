@@ -4,14 +4,18 @@ import Lottie from "lottie-react";
 import React, { useContext } from "react";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import login from "../../assets/78126-secure-login.json";
 import { AuthContext } from "../../providers/AuthProvider";
 AOS.init();
 const Login = () => {
-  const navigate = useNavigate();
   const { signIn, signInWithGoogle } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location);
+  const from = location.state?.from?.pathname || "/";
+
   // form click handle function
   const handleToLogin = (event) => {
     event.preventDefault();
@@ -31,10 +35,9 @@ const Login = () => {
             title: "Welcome to Kid's Toy House!!!",
             text: "User has been log in successfully.",
           });
-          navigate("/");
         }
-        // navigate to home
-
+        // navigate to home or desired directory
+        navigate(from, { replace: true });
         console.log(user);
       })
       .catch((error) => console.error(error.message));
@@ -51,10 +54,9 @@ const Login = () => {
             title: "Welcome to Kid's Toy House!!!",
             text: "User has been log in successfully.",
           });
-          navigate("/");
         }
-        // navigate to home
-
+        // navigate to home or desired directory
+        navigate(from, { replace: true });
         console.log(user);
       })
       .catch((error) => {
