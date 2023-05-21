@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { BiX } from "react-icons/bi";
 import { FaBars } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
+import logo from "../../../../public/logo.png";
 import { AuthContext } from "../../../providers/AuthProvider";
 import "./Navbar.css";
 const Navbar = () => {
@@ -82,9 +83,7 @@ const Navbar = () => {
   const websiteLogo = (
     <>
       <Link to="/">
-        <h1 className="text-3xl font-semibold text-[#ff0018]">
-          Kid's Toy House
-        </h1>
+        <img src={logo} alt="" className="h-24 w-24" />
       </Link>
     </>
   );

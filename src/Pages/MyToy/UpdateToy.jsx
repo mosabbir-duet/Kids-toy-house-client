@@ -1,10 +1,24 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import Swal from "sweetalert2";
+import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
-const AddToy = () => {
-  const [toyData, setToyData] = useState([]);
+
+const UpdateToy = () => {
   const { user } = useContext(AuthContext);
+  const toy = useLoaderData();
+  //   console.log(toy);
+  const {
+    _id,
+    sellerName,
+    subCategory,
+    toyName,
+    toyPrice,
+    quantity,
+    toyImageUrl,
+    message,
+    sellerEmail,
+    ratings,
+  } = toy || {};
 
   const {
     register,
@@ -15,9 +29,9 @@ const AddToy = () => {
   } = useForm();
   const onSubmit = (data) => {
     console.log(data);
-    setToyData(data);
-    fetch("https://kids-toy-house-server.vercel.app/addtoys", {
-      method: "POST",
+
+    fetch(`https://kids-toy-house-server.vercel.app/${_id}`, {
+      method: "PUT",
       headers: {
         "content-type": "application/json",
       },
@@ -29,19 +43,18 @@ const AddToy = () => {
           Swal.fire({
             icon: "success",
             title: "Wow!!!",
-            text: "Toy added successfully...",
+            text: "Toy Updated successfully...",
           });
         }
       })
       .catch((error) => console.log(error.message));
     reset();
   };
-
   return (
     <div className="my-12">
       <div className="w-2/3 mx-auto border border-orange-500 p-12 rounded-xl">
         <h1 className="text-3xl font-medium text-orange-500 mb-8 p-4 text-center border-b-2 border-warning ">
-          Added Toy Information
+          Update Toy Information
         </h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -105,6 +118,7 @@ const AddToy = () => {
               </label>
               <input
                 className="input input-bordered"
+                defaultValue={toyName}
                 placeholder="Toy name"
                 type="text"
                 {...register("toyName", {
@@ -123,6 +137,7 @@ const AddToy = () => {
               <input
                 type="url"
                 placeholder="Toy image url"
+                defaultValue={toyImageUrl}
                 className="input input-bordered"
                 {...register("toyImageUrl", {
                   required: "Field value required.",
@@ -140,6 +155,7 @@ const AddToy = () => {
               <input
                 type="text"
                 placeholder="Toy price"
+                defaultValue={toyPrice}
                 className="input input-bordered"
                 {...register("toyPrice", { required: "Field value required." })}
               />
@@ -155,6 +171,7 @@ const AddToy = () => {
               <input
                 type="numbers"
                 placeholder="Toy ratings"
+                defaultValue={ratings}
                 className="input input-bordered"
                 {...register(
                   "ratings",
@@ -176,6 +193,7 @@ const AddToy = () => {
               <input
                 type="text"
                 className="input input-bordered"
+                defaultValue={quantity}
                 {...register("quantity", { required: "Field value required." })}
               />
               {errors.quantity && (
@@ -191,13 +209,16 @@ const AddToy = () => {
             <textarea
               rows="15"
               type="text"
+              defaultValue={message}
               className="input input-bordered"
               {...register("message")}
             />
           </div>
 
           <div className="form-control mt-6">
-            <button className="btn btn-warning text-white px-8">Add Toy</button>
+            <button className="btn btn-warning text-white px-8">
+              Update Toy
+            </button>
           </div>
         </form>
       </div>
@@ -205,4 +226,4 @@ const AddToy = () => {
   );
 };
 
-export default AddToy;
+export default UpdateToy;

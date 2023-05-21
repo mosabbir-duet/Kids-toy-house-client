@@ -7,6 +7,8 @@ import Blog from "../Pages/Blog/Blog";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Home from "../Pages/Home/Home/Home";
 import Login from "../Pages/Login/Login";
+import MyToy from "../Pages/MyToy/MyToy";
+import UpdateToy from "../Pages/MyToy/UpdateToy";
 import Register from "../Pages/Register/Register";
 import Main from "../layouts/Main";
 import PrivateRoutes from "./PrivateRoutes";
@@ -48,6 +50,16 @@ export const router = createBrowserRouter([
             <ToyDetails></ToyDetails>
           </PrivateRoutes>
         ),
+      },
+      {
+        path: "/mytoys",
+        element: <MyToy></MyToy>,
+      },
+      {
+        path: "/updateToy/:id",
+        element: <UpdateToy></UpdateToy>,
+        loader: ({ params }) =>
+          fetch(`https://kids-toy-house-server.vercel.app/toy/${params.id}`),
       },
     ],
   },
