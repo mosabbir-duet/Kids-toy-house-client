@@ -15,7 +15,7 @@ const ShowToy = ({ toy, idx }) => {
         <td>{toyPrice}</td>
         <td>{quantity}</td>
         <td>
-          <Link to={`/toy/:${_id}`}>
+          <Link to={`/toy/${_id}`}>
             <button className="btn btn-warning ">View Details</button>
           </Link>
         </td>
