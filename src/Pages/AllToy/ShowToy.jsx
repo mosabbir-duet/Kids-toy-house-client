@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 const ShowToy = ({ toy, idx }) => {
   //   console.log(toy, idx);
+
   const { _id, sellerName, subCategory, toyName, toyPrice, quantity } =
     toy || {};
   return (

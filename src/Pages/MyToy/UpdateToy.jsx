@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const UpdateToy = () => {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const toy = useLoaderData();
   //   console.log(toy);
   const {
@@ -39,7 +41,8 @@ const UpdateToy = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.insertedId) {
+        // console.log(data);
+        if (data.modifiedCount) {
           Swal.fire({
             icon: "success",
             title: "Wow!!!",
@@ -48,6 +51,7 @@ const UpdateToy = () => {
         }
       })
       .catch((error) => console.log(error.message));
+    navigate("/mytoys");
     reset();
   };
   return (

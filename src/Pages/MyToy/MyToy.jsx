@@ -5,6 +5,7 @@ import ViewToy from "./ViewToy";
 const MyToy = () => {
   const { user } = useContext(AuthContext);
   const [myToyInfo, setMyToyInfo] = useState([]);
+  const [spinner, setSpinner] = useState(true);
   //   console.log(user?.email);
   useEffect(() => {
     fetch(
@@ -13,6 +14,7 @@ const MyToy = () => {
       .then((res) => res.json())
       .then((data) => {
         setMyToyInfo(data);
+        setSpinner(false);
       });
   }, [user]);
   return (
@@ -20,6 +22,11 @@ const MyToy = () => {
       <h1 className="text-center text-2xl md:text-4xl font-medium text-[#ff0018] my-12">
         Information about your Toy which added
       </h1>
+      {spinner ? (
+        <button className="btn loading mx-auto block my-6">loading</button>
+      ) : (
+        <></>
+      )}
       <table className="table w-full ">
         {/* head */}
         <thead>

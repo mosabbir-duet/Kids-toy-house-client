@@ -4,6 +4,7 @@ import ShowToy from "./ShowToy";
 const AllToy = () => {
   const [allToy, setAllToy] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [spinner, setSpinner] = useState(true);
   console.log(searchText);
   useEffect(() => {
     fetch("https://kids-toy-house-server.vercel.app/alltoys")
@@ -11,6 +12,7 @@ const AllToy = () => {
       .then((data) => {
         setAllToy(data);
         console.log(data);
+        setSpinner(false);
       });
   }, []);
   const handleToSearch = () => {
@@ -54,7 +56,11 @@ const AllToy = () => {
             </svg>
           </button>
         </div>
-
+        {spinner ? (
+          <button className="btn loading mx-auto block my-6">loading</button>
+        ) : (
+          <></>
+        )}
         <table className="table w-full ">
           {/* head */}
           <thead>

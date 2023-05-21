@@ -1,5 +1,6 @@
 import React from "react";
 import Banner from "../Banner/Banner";
+import Category from "../Category/Category";
 import Galary from "../Galary/Galary";
 import Testimonial from "../Testimonial/Testimonial";
 
@@ -8,6 +9,7 @@ const Home = () => {
     <>
       <Banner></Banner>
       <Galary></Galary>
+      <Category></Category>
       <Testimonial></Testimonial>
     </>
   );
